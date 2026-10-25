@@ -52,6 +52,12 @@ default.size.stdout \
 OBJDUMP_LIST += \
 Interrupts.list \
 
+OBJCOPY_HEX += \
+Interrupts.hex \
+
+OBJCOPY_BIN += \
+Interrupts.bin \
+
 
 # All Target
 all: main-build
@@ -75,12 +81,22 @@ Interrupts.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+Interrupts.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "Interrupts.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+Interrupts.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Interrupts.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) Interrupts.elf Interrupts.list Interrupts.map default.size.stdout
+	-$(RM) Interrupts.bin Interrupts.elf Interrupts.hex Interrupts.list Interrupts.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
