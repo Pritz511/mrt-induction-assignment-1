@@ -66,8 +66,8 @@ all: main-build
 main-build: Polling.elf secondary-outputs
 
 # Tool invocations
-Polling.elf Polling.map: $(OBJS) $(USER_OBJS) /home/pritz/Desktop/Polling/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Polling.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/pritz/Desktop/Polling/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Polling.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Polling.elf Polling.map: $(OBJS) $(USER_OBJS) /home/pritz/Desktop/STM32/Polling/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Polling.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/pritz/Desktop/STM32/Polling/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Polling.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
